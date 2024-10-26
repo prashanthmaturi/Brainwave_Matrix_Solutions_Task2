@@ -1,0 +1,409 @@
+<html>
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <title>ElectronicBazar</title>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            
+        }
+        main{
+            background-color:#a8a7a7;
+        }
+        #startbtn{
+            background-color: rgb(255, 115, 0);
+            border:1px solid white;
+            transition: transform 0.3s;
+
+        }
+        #startbtn:hover{
+            transform:scale(1.07);
+            background: none;
+
+
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+        
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid white;
+            width: 80%;
+            color:white;
+            animation: fadeIn 0.5s;
+            border-radius: 17px;
+           
+            
+        }
+        .login{
+            margin: 15% auto;
+            padding: 20px;
+            background-color: aliceblue;
+            border: 1px solid white;
+            width: 40%;
+            color:#666;
+            animation: fadeIn 0.5s;
+            border-radius: 17px;
+            transition-duration: 0.3s;
+        }
+        .login:hover{
+            transform: scale(1.15);
+        }
+        .login form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .login button{
+            border: 1px solid white;
+            width:70px;
+            color:white;
+            background-color: rgb(255, 115, 0);
+            border-radius: 5px;
+            transition-duration: 0.3s;
+            animation: fadeIn 0.5s;
+        }
+        .login button:hover{
+            transform:scale(1.2);
+            background-color:white;
+            border:1px solid rgb(255, 115, 0);
+            color:rgb(255, 115, 0);
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+    height:14dvh;
+}
+.products-section {
+    padding: 50px 20px;
+    text-align: center;
+}
+.products-section h2{
+    color:white;
+}
+
+.products-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.product-card {
+    color: #fff;
+    border-radius: 16px;
+    border:1px solid white;
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+    transition: transform 0.3s;
+    padding:10px;
+    height:400px;
+    display: grid;
+  place-items: center;
+}
+
+.product-card:hover {
+    transform: scale(1.1);
+}
+
+.product-card img {
+    width: 150px;          
+    height: auto;            
+    border-radius: 4px; 
+    object-fit: cover;
+}
+
+.product-card h3 {
+    padding: 15px;
+}
+.product-card p {
+    font-size: 16px;
+    color: #666;
+}
+
+.product-card button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color:#ff6347;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 3px;
+}
+
+.product-card button:hover {
+    background-color: #e63216;
+    transform: scale(1.02);
+}
+.show{
+transition-duration: 0.3s;
+}
+.show:hover{
+    transform: scale(1.2);
+}
+
+
+
+    </style>
+</head>
+<body class="bg-black text-white">
+    <header class="flex justify-between items-center p-4 bg-black">
+        <div class="flex items-center">
+            <div class="text-2xl font-bold text-orange-500">EletronicBazar</div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <input class="px-4 py-2 rounded-full text-black" placeholder="Search " type="text"/>
+            <i class="fas fa-search text-white"></i>
+        </div>
+        <div class="flex items-center space-x-4">
+            <i class="fas fa-user cursor-pointer" onclick="openModal('signupModal')">Signup</i>
+            <i class="fas fa-user cursor-pointer" onclick="openModal('loginModal')">Login</i>
+            <div class="relative">
+                <i class="fas fa-shopping-cart cursor-pointer" onclick="openModal('cartModal')">Cart</i>
+                <span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 text-xs">0</span>
+            </div>
+        </div>
+    </header>
+    <nav class="flex justify-center space-x-8 bg-black py-4">
+        <a class="text-white cursor-pointer hover:text-orange-500" onclick="openModal('productsModal')">Mobiles</a>
+        <a class="text-white cursor-pointer hover:text-orange-500" onclick="openModal('productsModal')">Laptops & Monitors</a>
+        <a class="text-white cursor-pointer hover:text-orange-500" onclick="openModal('productsModal')">Accessories</a>
+        <a class="text-white cursor-pointer hover:text-orange-500" onclick="openModal('productsModal')">Television & Soundbar</a>
+        <a class="text-white cursor-pointer hover:text-orange-500" onclick="openModal('productsModal')">Refrigerators</a>
+        <a class="text-white cursor-pointer hover:text-orange-500" onclick="openModal('productsModal')">Tablets & Wearables</a>
+        <a class="text-white cursor-pointer hover:text-orange-500" onclick="openModal('productsModal')">Washing Machines</a>
+    </nav>
+    <main class="p-8">
+        <div class="text-center text-white">
+            <h1 class="text-5xl font-bold">EletronicBazar.</h1>
+            <p class="mt-4">Celebrations get fab,The more you grab.</p>
+            <button class="mt-6 px-6 py-3 bg-orange-500 text-white rounded-full " id="startbtn" style="border-radius:10px; border:1.5px solid white"><a href="#products">Start Now</a></button>
+        </div>
+        <div class="flex justify-center mt-8">
+            <img id="img_h" style="border-radius:7px " class="w-1/4 show" height="200" src="images/show1.jpg" width="100"/>
+            <img id="img_h" style="border-radius:7px " class="w-1/6 show" height="100" src="images/show2.jpg" width="100"/>
+            <img id="img_h" style="border-radius:7px " class="w-1/6 show" height="100" src="images/show3.jpg" width="100"/>
+            <img id="img_h "style="border-radius:7px " class="w-1/6 show" height="100" src="images/show4.jpg" width="100"/>
+        </div>
+        
+        
+        
+    
+    
+    <section id="products" class="products-section">
+        <h2>Our Products</h2>
+        <div class="products-container" id="products-container">
+            <div class="product-card">
+                <img src="images/image1.jpg">
+                <h3>POCO M6 5G, Orion Blue</h3>
+                <p>₹ 11,000</p>
+                <button id="startbtn" onclick="addToCart('POCO M6 5G')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image2.jpg">
+                <h3>Apple iPad (10th Generation)</h3>
+                <p>₹ 30,999</p>
+                <button id="startbtn" onclick="addToCart('Apple iPad 10th Generation')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image3.jpg">
+                <h3>HP 64GB Pen Drive</h3>
+                <p>₹ 359</p>
+                <button id="startbtn" onclick="addToCart('HP 64GB Pen Drive')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image4.jpg">
+                <h3>Duracell Power Bank 10000 mAh</h3>
+                <p>₹ 1,699</p>
+                <button id="startbtn" onclick="addToCart('Duracell Power Bank 10000 mAh')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image5.jpg">
+                <h3>POCO X6 5G</h3>
+                <p>₹ 16,999</p>
+                <button id="startbtn" onclick="addToCart('POCO X6 5G')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image6.jpg">
+                <h3>Apple iPhone 13</h3>
+                <p>₹ 42,999</p>
+                <button id="startbtn" onclick="addToCart('Apple iPhone 13')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image7.jpg">
+                <h3>iQOO Z7 Pro 5G</h3>
+                <p>₹ 21,999</p>
+                <button id="startbtn" onclick="addToCart('iQOO Z7 Pro 5G')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image8.jpg">
+                <h3>JBL Quantum 910 Wireless Headset</h3>
+                <p>₹ 9,999</p>
+                <button id="startbtn" onclick="addToCart('JBL Quantum 910 Wireless Headset')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image9.jpg">
+                <h3>Zuzu Android 9 Smart Projector</h3>
+                <p>₹ 29,500</p>
+                <button id="startbtn" onclick="addToCart('Zuzu Android 9 Smart Projector')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image10.jpg">
+                <h3>Redmi 13C 5G</h3>
+                <p>₹ 8,749</p>
+                <button id="startbtn" onclick="addToCart('Redmi 13C 5G')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image11.jpg">
+                <h3>Fujifilm Instax Mini 12 Instant Camera</h3>
+                <p>₹ 6,499</p>
+                <button id="startbtn" onclick="addToCart('Fujifilm Instax Mini 12 Instant Camera')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image12.jpg">
+                <h3>Zebronics Multimedia USB Keyboard</h3>
+                <p>₹ 299</p>
+                <button id="startbtn" onclick="addToCart('Zebronics Multimedia USB Keyboard ')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image13.jpg">
+                <h3>ZEBRONICS Zeb-Comfort Wired USB Mouse</h3>
+                <p>₹ 199</p>
+                <button id="startbtn" onclick="addToCart('ZEBRONICS Zeb-Comfort Wired USB Mouse')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image14.jpg">
+                <h3>Dyazo Adjustable Aluminum Foldable Portable Tabletop</h3>
+                <p>₹ 499</p>
+                <button id="startbtn" onclick="addToCart('Dyazo Foldable Portable Tabletop')">Add to cart</button>
+            </div>
+            <div class="product-card">
+                <img src="images/image15.jpg">
+                <h3>OnePlus Bluetooth Wireless in Ear Earphones </h3>
+                <p>₹ 1,299</p>
+                <button id="startbtn" onclick="addToCart('OnePlus Bluetooth Wireless in Ear Earphones')">Add to cart</button>
+            </div>
+        
+            
+            
+            
+
+        </div>
+    </section>
+</main>
+    <!-- Modal Structure -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('cartModal')">&times;</span>
+            <h2>Cart</h2>
+            <ul id="cart-items">Added Products...</ul>
+        </div>
+    </div>
+
+    <div id="productsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('productsModal')">&times;</span>
+            <h2>Products</h2>
+            
+        </div>
+    </div>
+
+    
+    <div id="loginModal" class="modal">
+        <div class="login">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <form>
+                <span class="fas fa-user"></span>
+                <h1>LOGIN</h1>
+            <input style="background: none;" type="text" placeholder="UserName">
+            <input style="background:none;" type="password" placeholder="password">
+            <button >Login</button><br>
+           
+            </form>
+        </div>
+    </div>
+    <div id="signupModal" class="modal">
+        <div class="login">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <form>
+                <span class="fas fa-user"></span>
+                <h1>SIGNUP</h1>
+            <input style="background:none" type="text" placeholder="UserName">
+            <input style="background:none" type="email" placeholder="Email">
+            <input style="background: none"type="password" placeholder="Create Password" >
+            <input style="background:none" type="password" placeholder="Confirm password">
+            
+            <button >Signup</button>
+           
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="footer">
+        <p>&copy; 2024 Electronicbazar. All rights reserved.</p>
+    </div>
+    <script>
+
+        let cart = [];
+
+        function addToCart(item) {
+            cart.push(item);
+            document.getElementById('cart-count').innerText = cart.length;
+            alert(item + ' added to cart');
+        }
+
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            if (modalId === 'cartModal') {
+                const cartItems = document.getElementById('cart-items');
+                cartItems.innerHTML = '';
+                cart.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerText = item;
+                    cartItems.appendChild(li);
+                });
+            }
+            
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
